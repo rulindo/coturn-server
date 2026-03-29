@@ -1,16 +1,12 @@
-FROM coturn/coturn:latest
+FROM alpine:latest
 
-USER root
+RUN apk add --no-cache coturn
 
-RUN apt-get update && apt-get install -y uuid-runtime
-
-USER coturn
-
-COPY turnserver.conf /etc/coturn/turnserver.conf
+COPY turnserver.conf /etc/turnserver.conf
 
 EXPOSE 3478
 EXPOSE 3478/udp
 EXPOSE 5349
 EXPOSE 5349/udp
 
-CMD ["turnserver", "-c", "/etc/coturn/turnserver.conf", "--no-stdout-log"]
+CMD ["turnserver", "-c", "/etc/turnserver.conf"]
